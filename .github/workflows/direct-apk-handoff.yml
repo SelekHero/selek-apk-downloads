@@ -1,0 +1,20 @@
+name: Direct APK Handoff
+
+on:
+  workflow_dispatch:
+
+jobs:
+  handoff:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download APK
+        run: |
+          mkdir -p out
+          curl -fL --retry 3 --retry-delay 2 -o out/SELEK-Founder-UAT-v1.0.54-NSR-Premium-DarkGreenIcon-arm64.apk "https://github.com/SelekHero/selek-apk-downloads/releases/download/direct-handoff-v1.0.54-20260927/SELEK-Founder-UAT-v1.0.54-NSR-Premium-DarkGreenIcon-arm64.apk"
+          test -s out/SELEK-Founder-UAT-v1.0.54-NSR-Premium-DarkGreenIcon-arm64.apk
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SELEK-Founder-UAT-v1.0.54-NSR-Premium-DarkGreenIcon-arm64
+          path: out/SELEK-Founder-UAT-v1.0.54-NSR-Premium-DarkGreenIcon-arm64.apk
+          retention-days: 1
